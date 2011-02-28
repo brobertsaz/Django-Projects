@@ -78,13 +78,14 @@ MIDDLEWARE_CLASSES = (
 ROOT_URLCONF = 'crimemap.urls'
 
 TEMPLATE_DIRS = (
-    "./templates/")
+    "./templates/"
+)
 
 INSTALLED_APPS = (
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.sites',
-    'django.contrib.messages',
+#    'django.contrib.auth',
+#    'django.contrib.contenttypes',
+#    'django.contrib.sessions',
+#    'django.contrib.sites',
+#    'django.contrib.messages',
     'crimemap.mapper',
 )
