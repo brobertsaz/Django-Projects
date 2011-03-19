@@ -1,20 +1,22 @@
-<html style="height:100%;">
+<html>
 <head>
+<meta http-equiv="content-type" content="text/html; charset=iso-8859-1">
 <title>Buffalo Crime Map</title>
-<script src="http://maps.google.com/maps?file=api&amp;v=2&amp;" type="text/javascript">
-</script>
+<link rel=Stylesheet href="http://localhost:8000/static/style.css" type="text/css">
+<script src="http://maps.google.com/maps?file=api&amp;v=2&amp;" type="text/javascript"></script>
+<script src="http://localhost:8000/static/cVerticalMapTypeControl.js"></script>
 </head>
 
-<body onload="" onunload="GUnload()" style="height:100%;padding:0;margin:0;">
+<body onload="" onunload="GUnload()">
+
 <script type="text/javascript">
 var map_long = -78.820000;
 var map_lat = 42.938000;
 var map_zoom = 5;
+
 var crimes = [{% for crime in crime_list %}[{{crime.longitude}},{{ crime.latitude }},'{{ crime.address }}','{{ crime.type }}','{{ crime.date }}']{% if not forloop.last %},{% endif %}{% endfor %}];
 </script>
-
-<div id="map" style="height:100%;width:100%;">
-</div>
+<div id="map"></div>
 
 <script type="text/javascript">
 function addCrimeMarker(lng, lat, address, crime_type, crime_date) {
@@ -29,9 +31,11 @@ if (GBrowserIsCompatible()) {
     var map_div = document.getElementById("map");
     var map = new GMap2(map_div);
 
-    map.addControl(new GSmallMapControl());
-    map.addControl(new GMapTypeControl());
-
+    var pos1 = new GControlPosition(G_ANCHOR_TOP_LEFT, new GSize(19,170));
+    map.addControl(new GSmallMapControl(),pos1 );
+    var pos2 = new GControlPosition(G_ANCHOR_TOP_LEFT, new GSize(7,90));
+    map.addControl(new cVerticalMapTypeControl(), pos2);
+    
     var pt = new GLatLng(top.map_lat, top.map_long);
     map.setCenter(pt, 17 - top.map_zoom);
 
@@ -42,6 +46,33 @@ if (GBrowserIsCompatible()) {
     }
 }
 </script>
+
+
+<div id="banner" class="mapElement">
+<div id="bannerInner">
+<p><b>Buffalo</p><img src="http://localhost:8000/static/buffalo.png"><p>Crime</b></p>
+</div>
+</div>
+
+<div id="nav">
+<h4>Crimes</h4>
+<ul class="ul-cat">
+    <li><a href="http://localhost:8000/crime/homicide/">Homicide<a></li>
+    <li><a href="http://localhost:8000/crime/drugs">Drugs</a></li>
+    <li><a href="http://localhost:8000/crime/prostitution/">Prostitution<a></li>
+    <li><a href="http://localhost:8000/crime/robbery">Armed Robbery</a></li>
+    <li><a href="http://localhost:8000/crime/automobile_theft">Automobile Theft<a/></li>
+    <li><a href="http://localhost:8000/crime/arson">Arson</a></li>
+</ul>
+</div>
+
+<div id="footer">
+<p>Nickel Cigar Publications &copy 2007.</p>
+</div>
+
+<div id="disclaimer">
+<p>Not associated with the City of Buffalo or the Buffalo Police Department.<p>
+</div>
 
 </body>
 </html>
